@@ -1,0 +1,663 @@
+%=======================================================[[Define parameter of document]]
+\documentclass{article}
+\pagestyle{empty}
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in} 
+\setlength{\topmargin}{-0.75in}
+\setlength{\headsep}{0.00in} 
+\setlength{\headheight}{0.00in}
+\setlength{\evensidemargin}{-0.50in}
+\setlength{\oddsidemargin}{-0.50in} 
+\setlength{\textwidth}{7.50in}
+\setlength{\textheight}{10in} 
+\setlength{\voffset}{0.00in}
+\setlength{\hoffset}{0.00in} 
+\setlength{\marginparwidth}{0.00in}
+\setlength{\marginparsep}{0.00in} 
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.0in}
+
+%=======================================================[[Package]]
+%\usepackage[dvipdf]{graphicx}
+%\usepackage{amsfonts}
+%\usepackage{mathptmx}
+%\usepackage[scaled=.90]{helvet}
+%\usepackage{courier} 
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%\usepackage[T1]{fontenc}
+\usepackage{linalgjh}
+\usepackage{paralist}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+\urlstyle{same}
+
+%\usepackage[margin=0.5in]{geometry}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{Page \thepage \hspace{1pt} of \pageref*{LastPage}}
+
+\def\Dash{\unskip\thinspace\textemdash\thinspace\ignorespaces\allowbreak}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{exmp}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+
+\theoremstyle{example}
+\newtheorem{example}{Example}[section]
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+%=======================================================[[Title page information]]
+%=======================================================[[Document begins here]]
+\begin{document}
+\begin{center}
+\begin{huge}
+	Vector Spaces of $\Re^n$
+\end{huge}
+\end{center}
+\tiny
+\fbox{\parbox{\textwidth}{\scshape
+From \emph{Linear Algebra} by Jim Hefferon 
+\texttt{\url{http://joshua.smcvt.edu/linearalgebra}},
+{A First Course in Linear Algebra} by Robert A. Beezer
+\texttt{\url{http://linear.ups.edu/}}, and \emph{Linear Algebra with Applications (Lyryx)} by Keith W. Nicholson  
+modified by Emilie Richer and Yann Lamontagne \texttt{\url{http://obeymath.org}}  (licensed under GNU Free Documentation License or the
+Creative Commons Attribution-ShareAlike License.), \today.}}
+\normalsize
+
+\stepcounter{section}
+\section{Subspaces}
+
+\begin{definition} 
+A \definend{subspace} of $\mathbb{R}^n$ is a subset that is closed under addition and scalar multiplication. That is, A set\footnotemark $U$ of vectors in $\Re^n$ is called a \textbf{subspace}\index{subspaces!defined} of $\Re^n$ if it satisfies the following properties:\index{set of all ordered $n$-tuples ($\Re^n$)!subspaces}
+
+\begin{itemize}
+\item[S1.] The zero vector $\vec{0} \in U$.\index{vectors!zero vector}\index{zero vector}
+
+\item[S2.] If $\vec{x} \in U$ and $\vec{y} \in U$, then $\vec{x} + \vec{y} \in U$.
+
+\item[S3.] If $\vec{x} \in U$, then $a\vec{x} \in U$ for every real number $a$.
+
+\end{itemize}
+\footnotetext{We use the language of sets. Informally, a \textbf{set} $X$ is a collection of objects, called the \textbf{elements} of the set. The fact that $x$ is an element of $X$ is denoted $x \in X$. Two sets $X$ and $Y$ are called equal (written $X = Y$) if they have the same elements. If every element of $X$ is in the set $Y$, we say that $X$ is a \textbf{subset} of $Y$, and write $X \subseteq Y$. Hence $X \subseteq Y$ and $Y \subseteq X$ both hold if and only if $X = Y$.}
+\end{definition}
+
+\begin{example}  \label{ex:TrivSbspReFour}
+Show that the singleton subset of $\Re^n$
+\begin{equation*}
+  \{ \vec{0} \}
+\end{equation*}
+is a subspace.
+\end{example}
+\vspace{2in}
+
+\begin{definition} \label{df:TrivialVectorSpace}
+%<*df:TrivialVectorSpace>
+A one-element subspace is a \definend{trivial}\index{vector space!trivial}%
+\index{trivial space}
+subspace.
+%</df:TrivialVectorSpace>
+\end{definition}
+
+\begin{example}  \label{cex:RPlusNotSubSp}
+Show that the set \( \Re^+ \) is not a subspace of the vector space \( \Re^1 \).
+\end{example}
+\vspace{1in}
+
+\begin{example}   \label{ex:SubspacesRTwo}
+Show that the \( x \)-axis in \( \Re^2 \) is a subspace.
+\end{example}
+\vspace{1.75in}
+\begin{note}
+Subspaces of $\Re^2$ are: $\Re^2$, lines through the origin, trivial subspace.
+\end{note}
+\newpage
+
+\begin{example} 
+Show that the subset of \( \Re^3 \) that is a plane through the origin
+\begin{equation*}
+  P=\left\{ \colvec{x \\ y \\ z}  \Big|\; x+y+z=0\right\}
+\end{equation*}
+is a subspace.
+\end{example}
+\vspace{4.2in}
+\begin{example}
+Determine which subsets are a subspace of $\Re^3$: $W_1=\left\{(x,\;0,\;z)\; |\; x,\;z\in\Re\right\}$, $W_2=\left\{(x,\;1,\;z)\; |\; x,\;z\in\Re\right\}$.
+\end{example}
+\vspace{4.2in}
+
+
+\begin{note}
+Subspaces of $\Re^3$ are: $\Re^3$, planes through the origin, lines through the origin, trivial subspace.
+\end{note}
+\newpage
+\begin{theorem}
+If $A\mathbf{x}=\mathbf{0}$ is a homogenous linear system of $m$ equations in $n$ unknowns, then 
+the set of \definend{solution vectors} is a subspace of $\Re^n$.
+\end{theorem}
+\vspace{4in}
+
+\begin{example}
+Express the subspace $W=\left\{\mathbf{x}\;|\;A\mathbf{x}=\mathbf{0}\text{ and }\mathbf{x}\in\Re^3\right\}$ of $\Re^3$ as a parametric equation where
+\[
+A=\begin{bmatrix}
+1 & -1 & 0\\
+2 & 1 & 1\\
+-1 & 4 & 1
+\end{bmatrix}
+\]
+\end{example}
+\newpage
+\section{Spanning Sets}
+\begin{definition}
+A vector $\vec{w}$ is a \definend{linear combination} of a set 
+$S = \left\{ \vec{s}_1, \vec{s}_2, \ldots, \vec{s}_n\right\}$ if it 
+can be expressed in the form
+\[
+\vec{w} = c_1\vec{s}_1+c_2\vec{s}_2+\cdots+c_n\vec{s}_n
+\]
+where $c_i\in\Re$.
+\end{definition}
+
+\begin{example}
+Any vector $(a, b, c)\in\Re^3$ is expressible as a linear combination of 
+the standard basis vectors
+\[
+(a, b, c) = a\vec{i}+b\vec{j}+c\vec{k}
+\]
+\end{example}
+
+\begin{example}
+Show that $\vec{w}=(3, -4, 2)$ is a linear combination of $\vec{u}=(4, -3, 3)$ and 
+$\vec{v}=(1, 1, 1)$
+\end{example}
+\vspace{2in}
+
+\begin{example}
+	Determine whether $\vec{p}=(2,\;-1)$ is a linear combination of $\vec{p}_1=(2,\;1)$ and $\vec{p}_2=(4,\;2)$.
+\end{example}
+\vspace{2in}
+
+\begin{example}
+	Determine if $\vec{x}$ is a linear combination of $\vec{a}$, $\vec{b}$, $\vec{c}$ where
+\[
+	\vec{x} = (2,\; -1,\;3,\; 1)\;\;\;
+	\vec{a} = (2,\; -1,\;3,\; 0)\;\;\;
+	\vec{b} = (1,\; 2,\; 3,\; -1)\;\;\;
+	\vec{c} = (-4,\; -3,\;-9,\; 3)
+\] 
+\end{example}
+\newpage
+\begin{definition} \label{df:Span}
+%<*df:Span>
+The \definend{span} of a nonempty subset \( S \) of a
+vector space is the set of all linear combinations of vectors from \( S \).
+\begin{equation*}
+  \mbox{span}(S) =\{ c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            \suchthat c_1,\ldots, c_n\in\Re
+            \text{\ and\ } \vec{s}_1,\ldots,\vec{s}_n\in S \}
+\end{equation*}
+The span of the empty subset of a subspace is its trivial subspace.
+%</df:Span>
+\end{definition}
+
+\begin{theorem}   \label{le:SpanIsASubsp}
+%<*lm:SpanIsASubsp>
+The span of any subset is a subspace.  In addition, the 
+span of a subset is the smallest subspace containing all 
+vectors of the subset.
+%</lm:SpanIsASubsp>
+\end{theorem}
+\newpage
+
+\begin{example}
+Let $W=\mbox{span}\left\{\vec{u}, \vec{v} \right\}$ where $\vec{u}=(1,\; 0,\; 0)$ 
+and $\vec{v}=(0,\; 1,\; 0)$.  Is $(1,\; 1,\; 1)$ in $W$? What about $(2,\; 3,\; 0)$?
+\end{example}
+\vspace{2.5in}
+
+\begin{example}
+Express the subspace $W=\left\{\mathbf{x}\;|\;A\mathbf{x}=\mathbf{0}\text{ and }\mathbf{x}\in\Re^3\right\}$ of $\Re^3$ as a span of a set of vectors where
+\[
+A=\begin{bmatrix}
+1 & -1 & 1\\
+2 & -2 & 2\\
+-1 & 1 & -1
+\end{bmatrix}
+\]
+\end{example}
+\newpage
+
+\begin{example}
+Determine whether $S=\left\{(2,\; 1,\; 0),\; (-1,\; 3,\; 1),\; (1,\; 1,\; 1)\right\}$ spans $\Re^3$.
+\end{example}
+\vspace{5in}
+
+\begin{example}
+	Determine whether $S=\left\{(1,\;1,\;1),\; (1,\;0,\;-1)\right\}$ spans $\Re^3$.
+\end{example}
+\newpage
+\begin{example}
+	Find the conditions on the coefficient of $\vec{p}=(a_0,\;a_1,\;a_2)$ such that $\vec{p}\in \mbox{span}(\{(1,\;1,\;1),\; (1,\;2,\;3)\})$
+\end{example}
+\vspace{5in}
+\begin{theorem}
+Let $S$ and $S'$ be subsets of a subspace $V$. If every vector in $S$ is expressible 
+as a linear combination of the vectors in $S'$ then $\mbox{span}(S)$ is a subspace of $\mbox{span}(S')$. 
+If in addition every vector of $S'$ is expressible 
+as a linear combination of the vectors in $S$ then $\mbox{span}(S)=\mbox{span}(S')$.
+\end{theorem}
+
+\begin{example}
+	Let $S=\left\{\vec{m}_1, \vec{m}_2 \right\}$ and $S'=\left\{\vec{m}_3, \vec{m}_4\right\}$ where
+\[
+	\vec{m}_1 = (2,\; -1,\;3,\; 0),\;\;\;
+	\vec{m}_2 = (0,\; 1,\;1,\; 0),\;\;\;
+	\vec{m}_3 = (4,\; -1,\;7,\; 0),\;\;\;
+	\vec{m}_4 = (0,\; 2,\;2,\; 0)
+\] 
+Is $\mbox{span}(S)=\mbox{span}(S')$?
+\end{example}
+\newpage
+\begin{example}  \label{ex:SubspRThree}
+The picture below shows the subspaces of \( \Re^3 \) that we now know of, the 
+trivial subspace, the lines through the origin,
+the planes through the origin, and the whole space
+(of course, the picture shows only a few of the infinitely many subspaces). 
+In the next section we will prove that $\Re^3$ has no other
+type of subspaces, so in fact this picture shows them all.
+
+That picture describes the subspaces 
+as spans of sets with a minimal number of members.
+Note that the subspaces 
+fall naturally into levels\Dash planes on one level, 
+lines on another,
+etc.\Dash according to how many vectors are in the minimal-sized
+spanning set.
+\begin{center}
+  \setlength{\unitlength}{4pt}
+  \begin{picture}(75,38)(0,-2) %subspaces of R-three
+      \thinlines
+      \put(45,31){\makebox(0,0)[bl]{
+                        \scriptsize \( %\Re^3=
+                                   \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                              +y\colvec[r]{0 \\ 1 \\ 0}
+                                              +z\colvec[r]{0 \\ 0 \\ 1}} \)} }
+    %Next the dimension two subspaces
+      \put(43,31){\line(-4,-1){25} } % connects R3 to 2,a
+      %set 2,a:
+      \put(0,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                                 +y\colvec[r]{0 \\ 1 \\ 0} }\) }}
+      \put(48,29){\line(-3,-1){12} } % connects R3 to 2,b
+      %set 2,b:
+      \put(20,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                                 +z\colvec[r]{0 \\ 0 \\ 1} }\) }}
+      \put(53,29){\line(-1,-1){3}} % connects R3 to 2,c
+      %set 2,c:
+      \put(40,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 1 \\ 0}
+                                                 +z\colvec[r]{0 \\ 0 \\ 1} }\) }}
+      \put(60,22){\makebox(0,0)[l]{$\cdots$} }
+    %Next the dimension one subspaces
+      \put(7,18){\line(-1,-4){1} } % connects 2,a to 1,a
+      \put(22,18){\line(-3,-1){13} } % connects 2,c to 1,a
+      %set 1,a:
+      \put(0,10){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}} \)} }
+      \put(12,18){\line(1,-2){2} } % connects 2,a to 1,b
+      %set 1,b:
+      \put(12,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{0 \\ 1 \\ 0}} \)} }
+      \put(14,18){\line(2,-1){10} } % connects 2,a to 1,c
+      %set 1,c:
+      \put(24,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{2 \\ 1 \\ 0}} \)} }
+      \put(46,18){\line(-1,-1){3.25} } %connects 2,c to 1,d
+      %set 1,d:
+      \put(36,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{1 \\ 1 \\ 1}} \)} }
+      \put(48,10){\makebox(0,0)[l]{$\cdots$} }
+    %Finally, the trivial subspace.
+      \put(9,7.5){\line(4,-1){30} } %connects 1,a to trivial
+      \put(18.9,7.7){\line(3,-1){20} } %connects 1,b to trivial
+      \put(30.4,6.8){\line(2,-1){10} } %connects 1,c to trivial
+      \put(41,6){\line(1,-2){1.5} } %connects 1,d to trivial
+      \put(45,0){\makebox(0,0){\scriptsize\( \set{\colvec[r]{0 \\ 0 \\ 0} } \)} }
+  \end{picture}
+\end{center}
+\noindent The line segments between levels connect subspaces with 
+their superspaces. 
+\end{example}
+\newpage
+%\mbox{ }
+%\newpage
+
+\section{Linear Independence}
+
+\begin{definition}\label{def:LinInd}
+%<*df:LinInd>
+A nonempty subset $S = \left\{ \vec{s}_1,\; \vec{s}_2,\; \ldots,\; \vec{s}_n\right\}$ of a vector space is
+\definend{linearly independent}
+if 
+\[
+\vec{0} = c_1\vec{s}_1+c_2\vec{s}_2+\cdots+c_n\vec{s}_n
+\]
+only has the \definend{trivial solution}, that is, $c_1=c_2=\ldots =c_n=0$. Otherwise it is \definend{linearly dependent}.
+%</df:LinInd>
+\end{definition}
+
+\begin{example}
+Determine if $S=\{\vec{u},\; \vec{v},\; \vec{w}\}$ where
+\[
+\vec{u}=(2, 1, 3),\;\;\; \vec{v}=(1, 3, 1),\;\;\; \vec{w}=(3, 4, 4)
+\] 
+is linearly independent.
+\end{example}
+\vspace{1.5in}
+
+\begin{example}
+Determine if $S=\{M_1, M_2, M_3\}$ where
+\[
+M_1 =
+\begin{bmatrix}
+1 & 0\\
+2 & 0
+\end{bmatrix},\;\;\;
+M_2 =
+\begin{bmatrix}
+2 & 1\\
+3 & 1
+\end{bmatrix},\;\;\;
+M_3 =
+\begin{bmatrix}
+-1 & -3\\
+-3 & 4
+\end{bmatrix}
+\]
+is linearly independent.
+\end{example}
+\newpage
+
+\begin{example}
+Suppose $S=\{\vec{v}_1,\; \vec{v}_2,\; \vec{v}_3\}$ is linearly independent.  Are the vectors
+\[
+\vec{v}_1-\vec{v}_2,\; \vec{v}_3+\vec{v}_2,\; \vec{v}_1-\vec{v}_3
+\]
+linearly independent?
+\end{example}
+\vspace{5in}
+
+
+\begin{theorem}
+The polynomials
+\[
+1,\;x,\;x^2,\;\ldots,\;x^n
+\]
+form a linearly independent set.
+\end{theorem}
+\newpage
+
+\begin{example}
+Determine if $S=\{p_1(x), p_2(x), p_3(x)\}$ where
+\[
+p_1(x)=1-2x+x^2,\;\;\; p_2(x)=3+2x^2,\;\;\; p_3(x)=1+x+x^2
+\] 
+is linearly independent.
+\end{example}
+\vspace{3in}
+
+
+\begin{theorem} A subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) of a vector space
+is linearly dependent if and only if some \( \vec{s}_i \)
+is a linear combination of the vectors $S-\{\vec{s}_i\}$.
+\end{theorem}
+\newpage
+\begin{cor} It follows, that subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) of a vector space
+is linearly independent if and only if no \( \vec{s}_i \)
+is a linear combination of the vectors $S-\{\vec{s}_i\}$.
+\end{cor}
+
+
+\begin{example} 
+What can be said about the linear independence of the following set $S = \left\{ \vec{s}_1,\; \vec{s}_2,\; \ldots,\; \vec{s}_n,\; \vec{0}\right\}$?
+\end{example}
+\vspace{2in}
+
+\begin{example} 
+What can be said about the linear independence of the following set $S = \left\{ \vec{s}_1 \right\}$?
+\end{example}
+\vspace{2in}
+
+\begin{example} 
+What can be said about the linear independence of the following set $S = \left\{ \vec{s}_1,\; \vec{s}_2 \right\}$?
+\end{example}
+\vspace{2in}
+
+
+\begin{note}
+Geometric Interpretation:\\
+Two vectors in $\Re^2$ and $\Re^3$ are linearly independent if and only if the vectors do not lie on the same line
+(when their initial points are at the origin).\\
+
+Three vectors in $\Re^3$ are linearly independent if they do not lie on the same plane (when their initial points are at the origin).
+\end{note}
+\newpage
+%\mbox{ }
+%\newpage
+
+\section{Coordinates and Basis}
+
+\begin{definition}
+A \definend{basis} $B$
+for a subspace $V$ is a sequence of vectors $\{\vec{b}_1,\;\vec{b}_2,\;\ldots,\;\vec{b}_n\}$ that is linearly independent 
+and that spans the subspace $V$.
+\end{definition}
+\vspace{1.5in}
+
+\begin{definition}
+For $\Re^2$ the \definend{standard} (or \definend{natural}) basis is $\{\vec{i},\; \vec{j}\}$.\\
+For $\Re^3$ the \definend{standard} (or \definend{natural}) basis is $\{\vec{i},\; \vec{j},\; \vec{k}\}$.\\
+For $\Re^n$ the \definend{standard} (or \definend{natural}) basis is
+$\{ \vec{e}_1=(1,\;0,\;0,\;\ldots,\;0),\; \vec{e}_2=(0,\; 1,\; 0,\;\ldots, 0),\; \vec{e}_3=(0,\; 0,\; 1,\;\ldots, 0), \ldots, \vec{e}_n=(0,\; 0,\; 0,\;\ldots, 1)\}$
+\end{definition}
+
+\begin{example}
+Determine if $B=\{\vec{v}_1,\; \vec{v}_2, \vec{v}_3\}$ where
+\[
+\vec{v}_1 = (1, 2, 1),\;\;\; \vec{v}_2 = (2, 9, 0),\;\;\; \vec{v}_3=(3, 3, 4)
+\]
+is a basis for $\Re^3$
+\end{example}
+\newpage
+
+
+\begin{theorem}
+If $B=\{\vec{b}_1,\; \vec{b}_2,\;\ldots,\; \vec{b}_n\}$ is linearly independent then $B$ is a basis for $V=\mbox{span}(B)$.
+\end{theorem}
+\vspace{2in}
+
+\begin{theorem}[Uniqueness of Basis Representation] 
+In any subspace $V$, a subset $B$ is a basis
+if and only if each vector in the subspace $V$ can be expressed as a linear combination of elements of the subset $B$ 
+in one and only one way.
+\end{theorem}
+\vspace{8in}
+
+\begin{definition} 
+In a subspace with basis $B$
+the \definend{coordinate vector of $\vec{v}$ relative to $B$} (or \definend{representation of \( \vec{v} \) with respect to \( B \)}) is a vector of the coefficients used to express $\vec{v}$ as a 
+linear combination of the basis vectors:
+\begin{equation*}
+  \rep{\vec{v}}{B} = (\vec{v})_B = (c_1,\; c_2,\; \ldots,\; c_n )
+\end{equation*}
+where
+\( B=\{\vec{b}_1,\; \vec{b}_2,\; \dots,\;\vec{b}_n\} \) and 
+\( \vec{v}=c_1\vec{b}_1 + c_2\vec{b}_2 + \ldots + c_n\vec{b}_n \).
+\end{definition}
+
+\begin{remark}
+The definition of the basis requires that a basis be a sequence
+because without that we couldn't write these coordinates in a fixed order. 
+\end{remark}
+
+\begin{example}
+Find the coordinate vector of $\vec{v}=(3,4)$ relative to the basis 
+$B=\{\vec{i},\;\vec{j}\}$.
+\end{example}
+\vspace{1in}
+
+\begin{example}
+Find the coordinate vector of $\vec{v}=(3,4)$ relative to the basis 
+$B=\{\vec{b}_1,\;\vec{b}_2\}$ where
+\[
+\vec{b}_1=(2, -4)\;\;\;\vec{b}_2=(3, 2)
+\]
+\end{example}
+\vspace{2in}
+\newpage
+\section{Dimension}
+
+The previous subsection defines a basis of a vector space and
+shows that a space can have many different bases.
+So we cannot talk about ``the'' basis for a vector space.
+True, some vector spaces have bases that strike us as more natural
+than others.  We cannot, in general, associate with a space any single basis that
+best describes it.
+
+We can however find something about the bases that
+is uniquely associated with the space.
+This subsection shows that 
+any two bases for a space have the same number of elements.
+So with each space we can associate a number, 
+the number of vectors in any of its bases.
+
+Before we start, we first
+limit our attention to spaces where at least one basis has only finitely
+many members.
+
+\begin{definition}
+A subspace is \definend{finite-dimensional}
+if it has a basis with only finitely many vectors.
+\end{definition}
+
+\noindent One space that is not finite-dimensional is $\Re^\infty$
+this space is not spanned by any finite subset.
+
+\begin{lemma}[Exchange Lemma] \label{lm:ExchangeLemma}
+Assume that 
+\( B= \{\vec{b}_1,\; \vec{b}_2,\;\dots,\;\vec{b}_n\} \) is a basis for a
+subspace, and that for the vector \( \vec{v} \)
+the relationship \( \vec{v}=\lincombo{c}{\vec{b}} \)
+has \( c_i\neq 0 \).
+Then exchanging \( \vec{b}_i \) for \( \vec{v} \) yields another
+basis for the space.
+\end{lemma}
+\vspace{4.5in}
+
+\begin{theorem}
+In any finite-dimensional vector space, all 
+bases have the same number of elements.
+\end{theorem}
+
+\begin{definition}  \label{df:Dimension}
+The \definend{dimension} of a vector space is the number of vectors in any of its bases.
+\end{definition}
+
+\begin{example}
+Any basis for \( \Re^n \) has \( n \) vectors since the standard basis 
+\[
+\{ \vec{e}_1=(1,\;0,\;0,\;\ldots,\;0),\; \vec{e}_2=(0,\; 1,\; 0,\;\ldots, 0),\; \vec{e}_3=(0,\; 0,\; 1,\;\ldots, 0), \ldots, \vec{e}_n=(0,\; 0,\; 0,\;\ldots, 1)\}
+\]
+has \( n \) vectors.
+Thus, this definition of `dimension' generalizes the most familiar use of 
+term, that $\Re^n$ is $n$-dimensional.
+\end{example}
+
+\begin{example}
+A trivial space is zero-dimensional since its basis is empty.
+\end{example}
+\newpage
+
+
+\begin{example}
+Find a basis and determine the dimension of the subspace of $\Re^5$ determined by 
+the solution vectors of the following homogeneous system.
+\[
+\begin{array}{ccccccccccccc}
+x_1 & - & 2x_2 & + & x_3 & - & 3x_4 & + & x_5  &  = & 0\\
+-x_1 & - & x_2 &  &   & + & x_4  &  &  &  = & 0\\
+-2x_1 & + & 3x_2 & + & x_3 &  &   & - & x_5  &  = & 0\\
+\end{array}
+\]
+\end{example}
+\vspace{4in}
+\begin{cor}
+No linearly independent set can have a size greater than the dimension of the
+enclosing space.
+\end{cor}
+\begin{example}
+Verify the above corrollary by showing that $S=\{1,\; 1+x,\; 1+x+x^2,\; x+x^2\}$ is
+linearly dependent in its enclosing space $P_2$.
+\end{example}
+\newpage
+
+\begin{cor} 
+Any linearly independent set can be expanded to make a basis.
+\end{cor}
+\begin{example}
+Expand the set  $S=\{(1,\;1,\;1,1,1)\}$ to make a basis of the subspace of $\Re^5$ defined by
+$W=\{ (a,b,a,b,c)\;|\;a, b, c\in \Re\}$.
+\end{example}
+\vspace{4in}
+
+\begin{cor} 
+Any spanning set can be shrunk to a basis.
+\end{cor}
+\begin{example}
+	Shrink the set $S=\{\vec{m}_1,\; \vec{m}_2,\; \vec{m}_3,\; \vec{m}_4,\; \vec{m}_5\}$ such that it becomes a basis for $\mbox{span}(S)$ where
+\[
+	\vec{m}_1 = (1,\; 0,\; -2,\; 0),\;\;\;
+	\vec{m}_2 = (2,\; 1,\; 3,\; 1),\;\;\;
+	\vec{m}_3 = (-1,\; -3,\;4,\; 3),\;\;\;
+	\vec{m}_4 = (1,\; 2,\;-5,\; 4),\;\;\;
+	\vec{m}_5 = (3,\; -1,\;-6,\; 5)
+\]
+\end{example}
+\newpage
+
+
+\begin{cor}
+In an \( n \)-dimensional space, a set composed of \( n \) vectors is linearly 
+independent if and only if it spans the space.
+\end{cor}
+
+\begin{example}
+	Find a basis for $\Re^4$ containing the linearly independent set $S=\{(1,\;1,\;0,\;0),\;(1,\;0,\;1,0,\;0)\}$ 
+\end{example}
+\vspace{4in}
+
+
+
+
+
+\end{document}
+
