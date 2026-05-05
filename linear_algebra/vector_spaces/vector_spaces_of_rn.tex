@@ -124,7 +124,7 @@ subspace.
 \end{definition}
 
 \begin{example}  \label{cex:RPlusNotSubSp}
-Show that the set \( \Re^+ \) is not a subspace of the vector space \( \Re^1 \).
+Show that the set \( \Re^+ \) is not a subspace of \( \Re^1 \).
 \end{example}
 \vspace{1in}
 
@@ -214,8 +214,7 @@ $\vec{v}=(1, 1, 1)$
 \newpage
 \begin{definition} \label{df:Span}
 %<*df:Span>
-The \definend{span} of a nonempty subset \( S \) of a
-vector space is the set of all linear combinations of vectors from \( S \).
+The \definend{span} of a nonempty subset \( S \) is the set of all linear combinations of vectors from \( S \).
 \begin{equation*}
   \mbox{span}(S) =\{ c_1\vec{s}_1+\cdots+c_n\vec{s}_n
             \suchthat c_1,\ldots, c_n\in\Re
@@ -355,7 +354,7 @@ their superspaces.
 
 \begin{definition}\label{def:LinInd}
 %<*df:LinInd>
-A nonempty subset $S = \left\{ \vec{s}_1,\; \vec{s}_2,\; \ldots,\; \vec{s}_n\right\}$ of a vector space is
+A nonempty subset $S = \left\{ \vec{s}_1,\; \vec{s}_2,\; \ldots,\; \vec{s}_n\right\}$ is
 \definend{linearly independent}
 if 
 \[
@@ -375,23 +374,11 @@ is linearly independent.
 \vspace{1.5in}
 
 \begin{example}
-Determine if $S=\{M_1, M_2, M_3\}$ where
+	Determine if $S=\{\vec{M}_1, \vec{M}_2, \vec{M}_3\}$ where
 \[
-M_1 =
-\begin{bmatrix}
-1 & 0\\
-2 & 0
-\end{bmatrix},\;\;\;
-M_2 =
-\begin{bmatrix}
-2 & 1\\
-3 & 1
-\end{bmatrix},\;\;\;
-M_3 =
-\begin{bmatrix}
--1 & -3\\
--3 & 4
-\end{bmatrix}
+\vec{M}_1 = (1, 0, 2, 0)\\
+\vec{M}_2 = (2, 1, 3, 1)\\
+\vec{M}_3 = (-1, -3, -3, 4)
 \]
 is linearly independent.
 \end{example}
@@ -407,34 +394,26 @@ linearly independent?
 \vspace{5in}
 
 
-\begin{theorem}
-The polynomials
-\[
-1,\;x,\;x^2,\;\ldots,\;x^n
-\]
-form a linearly independent set.
-\end{theorem}
-\newpage
-
 \begin{example}
-Determine if $S=\{p_1(x), p_2(x), p_3(x)\}$ where
+	Determine if $S=\{\vec{p}_1, \vec{p}_2, \vec{p}_3\}$ where
 \[
-p_1(x)=1-2x+x^2,\;\;\; p_2(x)=3+2x^2,\;\;\; p_3(x)=1+x+x^2
+	\vec{p}_1=(1, -2, 1),\;\;\; \vec{p}_2=(3, 0, 2),\;\;\; \vec{p}_3=(1, 1, 1)
 \] 
 is linearly independent.
 \end{example}
-\vspace{3in}
+\newpage
 
 
-\begin{theorem} A subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) of a vector space
+\begin{theorem} A subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) 
 is linearly dependent if and only if some \( \vec{s}_i \)
 is a linear combination of the vectors $S-\{\vec{s}_i\}$.
 \end{theorem}
-\newpage
-\begin{cor} It follows, that subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) of a vector space
-is linearly independent if and only if no \( \vec{s}_i \)
+\vspace{6in}
+
+\begin{cor} It follows, that subset \( S=\set{\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n} \) is linearly independent if and only if no \( \vec{s}_i \)
 is a linear combination of the vectors $S-\{\vec{s}_i\}$.
 \end{cor}
+\newpage
 
 
 \begin{example} 
@@ -536,10 +515,10 @@ $B=\{\vec{b}_1,\;\vec{b}_2\}$ where
 \newpage
 \section{Dimension}
 
-The previous subsection defines a basis of a vector space and
+The previous subsection defines a basis of a subspace and
 shows that a space can have many different bases.
-So we cannot talk about ``the'' basis for a vector space.
-True, some vector spaces have bases that strike us as more natural
+So we cannot talk about ``the'' basis for a subspace.
+True, some subspace have bases that strike us as more natural
 than others.  We cannot, in general, associate with a space any single basis that
 best describes it.
 
@@ -574,12 +553,12 @@ basis for the space.
 \vspace{4.5in}
 
 \begin{theorem}
-In any finite-dimensional vector space, all 
+In any finite-dimensional subspace, all 
 bases have the same number of elements.
 \end{theorem}
 
 \begin{definition}  \label{df:Dimension}
-The \definend{dimension} of a vector space is the number of vectors in any of its bases.
+The \definend{dimension} of a subspace is the number of vectors in any of its bases.
 \end{definition}
 
 \begin{example}
