@@ -1,0 +1,279 @@
+% Standalone source; compile twice with pdflatex.
+\documentclass{article}
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in}
+\setlength{\topmargin}{-0.75in}
+\setlength{\headsep}{0in}
+\setlength{\headheight}{0in}
+\setlength{\evensidemargin}{-0.50in}
+\setlength{\oddsidemargin}{-0.50in}
+\setlength{\textwidth}{7.50in}
+\setlength{\textheight}{10in}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{0in}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{hyperref,fancyhdr,lastpage}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\urlstyle{same}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{Page \thepage\hspace{1pt} of \pageref*{LastPage}}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem*{note}{Note}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\work}{\par\vfill}
+\begin{document}
+\begin{center}\huge Markov Chains\end{center}
+{\tiny\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{
+This handout contains material adapted from \emph{Linear Algebra with Applications}, W. Keith Nicholson and Vretta-Lyryx Inc., version 2023-A, Section 2.9, pp. 132--139. \url{https://lyryx.com/linear-algebra-applications/}. Changes: notation $\vec{x}^{(n)}$ and $\vec{q}$, new teaching examples, expanded methods, and additional material on nonregular and doubly stochastic matrices. Nicholson-based material: CC BY-NC-SA 4.0, \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}. Dawson questions are separately credited. Prepared for Yann Lamontagne, September 2026.}}}
+\section{States and Transition Matrices}
+\begin{definition}
+A \textbf{Markov chain} describes a system that moves among a finite number of states in discrete steps. The probability distribution of its next state depends only on its present state, not on its earlier history. In these notes, transition probabilities remain constant over time.
+\end{definition}
+\begin{definition}
+Fix an order for the states. The \textbf{transition matrix} is $P=[p_{ij}]$, where
+\[
+p_{ij}=\Pr(\text{next state is }i\mid\text{present state is }j).
+\]
+\textbf{Column $j$ is the starting state; row $i$ is the destination.} Every entry is nonnegative and every column sums to $1$. Such a matrix is called \textbf{stochastic}. The entry $p_{jj}$ is the probability of remaining in state $j$.
+\end{definition}
+\begin{example}\label{ex:weather}
+Weather is classified as sunny $(S)$ or rainy $(R)$. After a sunny day, the next day is sunny with probability $0.70$. After a rainy day, the next day is rainy with probability $0.60$. Construct the transition matrix in the order $S,R$, check its column sums, and interpret $p_{12}$ and $p_{21}$.
+\end{example}
+
+\work
+
+\newpage
+\section{State Vectors and Successive Transitions}
+\begin{definition}
+A \textbf{state vector} $\vec{x}^{(n)}$ lists the probabilities, or population proportions, in the chosen state order after $n$ transitions. Its entries are nonnegative and sum to $1$. The given vector $\vec{x}^{(0)}$ is the \textbf{initial state vector}.
+\end{definition}
+\begin{theorem}[Nicholson, Theorem 2.9.1]
+If $P$ is the transition matrix, then
+\[
+\boxed{\vec{x}^{(n+1)}=P\vec{x}^{(n)}}\qquad\text{and hence}\qquad
+\boxed{\vec{x}^{(n)}=P^n\vec{x}^{(0)}}.
+\]
+\end{theorem}
+In component $i$, $x_i^{(n+1)}=\sum_j p_{ij}x_j^{(n)}$: each present-state probability is multiplied by the probability of moving from that state to $i$, and the contributions are added.
+\begin{note}
+The superscript $(n)$ labels the time step; it is not an entrywise power. Compute successive matrix-vector products. If $\vec{x}^{(0)}$ is a standard basis vector, the first product selects the corresponding column of $P$. Keep unrounded values until the requested final rounding.
+\end{note}
+\begin{example}\label{ex:iterate2}
+For the weather model in Example~\ref{ex:weather}, suppose today is sunny. Write the initial vector and calculate $\vec{x}^{(1)},\ldots,\vec{x}^{(5)}$. What is the probability of rain two days from now?
+\end{example}
+
+\work
+
+\newpage
+\begin{example}[Three-state iteration]\label{ex:iterate3}
+Let
+\[
+P=\begin{bmatrix}0.50&0.20&0.10\\0.30&0.50&0.30\\0.20&0.30&0.60\end{bmatrix},\qquad
+\vec{x}^{(0)}=\begin{bmatrix}0\\0\\1\end{bmatrix}.
+\]
+Calculate $\vec{x}^{(1)},\vec{x}^{(2)},\vec{x}^{(3)}$ and report each entry to three decimal places. Interpret the first entry of $\vec{x}^{(3)}$ and check that each state vector is a probability vector.
+\end{example}
+
+\work
+
+\newpage
+\section{Regular Transition Matrices}
+\begin{definition}
+A transition matrix $P$ is \textbf{regular} if there is a positive integer $m$ for which \emph{every} entry of $P^m$ is strictly positive.
+\end{definition}
+\begin{itemize}
+\item If every entry of $P$ is positive, take $m=1$.
+\item A zero in $P$ does not rule out regularity. A later power may have no zero entries.
+\item One positive power proves regularity. To prove nonregularity, explain why \emph{every} positive integer power retains a zero somewhere.
+\end{itemize}
+\begin{example}\label{ex:regular}
+Explain why the weather matrix in Example~\ref{ex:weather} is regular. Then show that the following transition matrix is regular by calculating its square:
+\[
+R=\begin{bmatrix}0&1/2&1/2\\1/4&1/2&0\\3/4&0&1/2\end{bmatrix}.
+\]
+\end{example}
+
+\work
+
+\newpage
+\section{Steady-State Vectors}
+\begin{definition}
+A \textbf{stationary probability vector} $\vec{q}$ satisfies
+\[
+\boxed{P\vec{q}=\vec{q},\qquad q_i\ge0,\qquad q_1+\cdots+q_k=1}.
+\]
+It is unchanged by a transition. For a regular chain, it is also called the \textbf{steady-state vector} and gives the limiting probabilities.
+\end{definition}
+\begin{theorem}[Nicholson, Theorem 2.9.2]
+A regular transition matrix has a unique stationary probability vector $\vec{q}$. Every entry of $\vec{q}$ is strictly positive. For every initial probability vector,
+\[
+P^n\vec{x}^{(0)}\longrightarrow\vec{q}\qquad(n\longrightarrow\infty).
+\]
+The limit is independent of the initial state. The columns of $P^n$ therefore all approach $\vec{q}$.
+\end{theorem}
+\textbf{Method.} Solve $(I-P)\vec{q}=\vec{0}$ and impose $\sum_iq_i=1$. Use the homogeneous equations to find ratios, then normalize; or include the sum equation directly in the system. Check $P\vec{q}=\vec{q}$ and the sum.
+\begin{note}
+Do not invert $I-P$: for a transition matrix it is singular, since its column sums are zero. The condition $\sum_iq_i=1$ selects a probability vector from the homogeneous solutions.
+\end{note}
+\begin{example}\label{ex:steady2}
+Find the steady-state vector of the weather matrix in Example~\ref{ex:weather}. Interpret the long-run probability of each type of weather.
+\end{example}
+
+\work
+
+\newpage
+\begin{example}[A three-state steady state]\label{ex:steady3}
+For the matrix from Example~\ref{ex:iterate3},
+\[
+P=\begin{bmatrix}0.50&0.20&0.10\\0.30&0.50&0.30\\0.20&0.30&0.60\end{bmatrix},
+\]
+justify regularity and find the exact steady-state vector by row reduction and normalization. Verify your answer and give the long-run percentages in all three states.
+\end{example}
+
+\work
+
+\newpage
+\textbf{Example 4.2 (continued).} Complete the normalization, verification, and interpretation.
+
+\work
+
+\newpage
+\section{A Nonregular Chain That Still Converges}
+Regularity guarantees a unique, strictly positive stationary vector and convergence from every initial distribution. If regularity fails, conclusions must be checked separately: a nonregular chain may still converge, or it may fail to converge.
+\begin{example}\label{ex:nonregular}
+Let
+\[
+A=\begin{bmatrix}0.60&0\\0.40&1\end{bmatrix},\qquad
+\vec{x}^{(0)}=\begin{bmatrix}a\\1-a\end{bmatrix},\quad0\le a\le1.
+\]
+\begin{enumerate}
+\item[(a)] Prove that $A$ is not regular.
+\item[(b)] Find a formula for $A^n$ and for $\vec{x}^{(n)}$, then determine the limit for every $a$.
+\item[(c)] Find the stationary probability vector. Which conclusion of the regular-chain theorem fails here?
+\end{enumerate}
+\end{example}
+
+\work
+
+\newpage
+\section{When the Row Sums Also Equal One}
+\begin{definition}
+A stochastic matrix is \textbf{doubly stochastic} if its row sums, as well as its column sums, are all $1$.
+\end{definition}
+\begin{example}[A general proof]\label{ex:uniformproof}
+Let $P$ be a regular $k\times k$ transition matrix whose row sums are also $1$. Prove that its steady-state vector has every entry equal to $1/k$. Explain where regularity is used.
+\end{example}
+
+\work
+
+\newpage
+\begin{example}\label{ex:doubly}
+Show that
+\[
+D=\begin{bmatrix}0&1/4&3/4\\1/4&3/4&0\\3/4&0&1/4\end{bmatrix}
+\]
+is a regular transition matrix. Then use Example~\ref{ex:uniformproof} to find its steady-state vector without solving a linear system.
+\end{example}
+
+\work
+
+\newpage
+\section{Building Models from Descriptions}
+\textbf{Procedure.} Name and order the states. For each starting state, fill one column with the probabilities of all possible destinations. Supply any missing ``stay'' probability by subtracting the other probabilities in that column from $1$. Check column sums before computing.
+\begin{example}[Two-state behaviour]\label{ex:commute}
+Alex either bikes $(B)$ or takes public transit $(T)$ to work. After biking, Alex bikes again the next workday with probability $3/4$. After taking transit, Alex takes transit again with probability $3/5$. Find the long-run probability that Alex bikes to work.
+\end{example}
+
+\work
+
+\newpage
+\begin{example}[Migration among three regions]\label{ex:migration}
+A fixed population is distributed among regions 1, 2, and 3. Each year:
+\begin{itemize}
+\item Of region 1's residents, $10\%$ move to region 2 and $10\%$ to region 3.
+\item Of region 2's residents, $10\%$ move to region 1 and $20\%$ to region 3.
+\item Of region 3's residents, $20\%$ move to region 1 and $10\%$ to region 2.
+\end{itemize}
+Everyone else remains in their current region. Assume the rates remain constant and there are no births, deaths, or movements outside these regions. Construct the transition matrix and determine the long-run percentage in each region.
+\end{example}
+
+\work
+
+\newpage
+\section*{Problem-Solving Summary}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{l|l}
+Task & Method\\\hline
+Construct $P$ & Columns: present state. Rows: next state.\\
+Check $P$ & Nonnegative entries; each column sums to $1$.\\
+Compute future distributions & $\vec{x}^{(n+1)}=P\vec{x}^{(n)}$.\\
+Prove regularity & Exhibit one power whose entries are all positive.\\
+Prove nonregularity & Show every positive power has a zero entry.\\
+Find a stationary vector & Solve $(I-P)\vec{q}=\vec{0}$ and $\sum_iq_i=1$.\\
+Justify convergence from any start & Apply the regular-chain theorem, if applicable.\\
+Use the uniform distribution & Check row sums $1$; use regularity for convergence.
+\end{tabular}
+\end{center}
+\textbf{Checks.} Keep the same state order throughout. Verify $P\vec{q}=\vec{q}$ and $\sum_iq_i=1$. A positive power means every \emph{entry} is positive. Do not confuse a stationary distribution with an unchanged individual state, or nonregularity with automatic failure of convergence.
+
+\medskip\textbf{Assigned problems.} Anton and Rorres, \emph{Elementary Linear Algebra: Applications Version}, 11th edition, Section \textbf{10.4}, Problems \textbf{1--8}, pp. 559--560.
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|l|l}
+Anton problem & Required skill & Preparation here\\\hline
+1 & Two-state iteration; regularity; steady state & Examples 2.1, 3.1, 4.1\\
+2 & Three-state iteration and steady state & Examples 2.2, 4.2\\
+3 & Solve normalized stationary systems & Examples 4.1, 4.2\\
+4 & Nonregular powers, limit, failed conclusion & Example 5.1\\
+5 & Prove the uniform-distribution result & Example 6.1\\
+6 & Positive square and row sums & Example 6.2\\
+7 & Two-state model from words & Example 7.1\\
+8 & Three-region migration model & Example 7.2
+\end{tabular}
+\end{center}
+\vfill
+{\small\textbf{Source.} W. Keith Nicholson, \emph{Linear Algebra with Applications}, open edition, version 2023-A, Vretta-Lyryx Inc., 2023, Section 2.9, ``An Application to Markov Chains,'' pp. 132--139, especially Theorems 2.9.1 and 2.9.2. These notes use $\vec{x}^{(n)}$ and $\vec{q}$ in place of Nicholson's $s_n$ and $s$. Sections 5--6 extend the discussion to the nonregular and doubly stochastic cases needed for Anton's assigned problems. Teaching examples are new; the following Dawson examination questions are separately credited adaptations.}
+
+\work
+
+\newpage
+\section{Dawson Final Examination Practice}
+The following prompts are reworded from the cited exams, retaining their mathematical data and tasks. The solutions are newly written.
+\begin{example}[Fall 2024, Question 14]\label{ex:dawsonfallmarkov}
+Use
+\[
+P=\begin{bmatrix}0.8&0.3\\0.2&0.7\end{bmatrix},\qquad\vec{x}^{(0)}=\begin{bmatrix}1\\0\end{bmatrix}.
+\]
+\begin{enumerate}
+\item[(a)] Determine the distributions after one, two, and three transitions.
+\item[(b)] Justify that $P$ is regular and compute its steady-state vector.
+\end{enumerate}
+\end{example}
+{\small\textit{Source:} Dawson College, 201-MA3-DW, \href{https://www.dawsoncollege.qc.ca/mathematics/wp-content/uploads/sites/113/Fall-2024-3.pdf}{Fall 2024 final examination}, Question 14, pp. 16--17 (7 marks).}
+
+\work
+
+\newpage
+\begin{example}[Winter 2024, Question 14]\label{ex:dawsonwintermarkov}
+A population occupies two regions. Initially, region 1 holds $70\%$ of the population and region 2 holds $30\%$. Each year, $10\%$ of region 1's residents move to region 2, while $5\%$ of region 2's residents move to region 1. The others stay. Thus
+\[
+P=\begin{bmatrix}0.90&0.05\\0.10&0.95\end{bmatrix},\qquad
+\vec{x}^{(0)}=\begin{bmatrix}0.70\\0.30\end{bmatrix}.
+\]
+\begin{enumerate}
+\item[(a)] Find the population distribution after each of the next three years. \hfill [2 marks]
+\item[(b)] Determine and interpret the limiting distribution if these migration rates continue. \hfill [4 marks]
+\end{enumerate}
+\end{example}
+{\small\textit{Source:} Dawson College, 201-MA3-DW, \href{https://www.dawsoncollege.qc.ca/mathematics/wp-content/uploads/sites/113/Winter-2024-3.pdf}{Winter 2024 final examination}, June 3, 2024, Question 14, p. 14.}
+
+\work
+\end{document}
