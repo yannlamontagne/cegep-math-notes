@@ -1,0 +1,262 @@
+% Standalone source; compile twice with pdflatex.
+\documentclass{article}
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in}
+\setlength{\topmargin}{-0.75in}
+\setlength{\headsep}{0in}
+\setlength{\headheight}{0in}
+\setlength{\evensidemargin}{-0.50in}
+\setlength{\oddsidemargin}{-0.50in}
+\setlength{\textwidth}{7.50in}
+\setlength{\textheight}{10in}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{0in}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{hyperref,fancyhdr,lastpage}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\urlstyle{same}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{Page \thepage\hspace{1pt} of \pageref*{LastPage}}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem*{note}{Note}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\work}{\par\vfill}
+\begin{document}
+
+\begin{center}\huge Leontief Input-Output Models\end{center}
+{\tiny\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\scshape
+This handout contains content adapted from \emph{Linear Algebra with Applications}, W. Keith Nicholson and Vretta-Lyryx Inc., version 2023-A, Section 2.8, ``The Open Model,'' pp. 130--131. \url{https://lyryx.com/linear-algebra-applications/}. Changes: notation $C,\vec{x},\vec{d}$, expanded explanations, new examples, detailed instructional material, and classroom workspaces. Nicholson-based material licensed under CC BY-NC-SA 4.0: \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}. Prepared for Yann Lamontagne, September 2026.}}}
+
+\section{Consumption Matrices}
+An industry needs inputs to produce its output. For example, a farm uses some of its own crops as seed and purchases equipment from another industry. Production must supply both the industries themselves and their outside customers. We assume that input requirements are proportional to output and remain fixed over the period considered.
+
+\begin{definition}
+An \textbf{open economy} has producing sectors and an \textbf{open sector}, consisting of outside customers. The \textbf{outside demand} is the output required by these customers, in addition to the output used by the producing sectors.
+\end{definition}
+
+\begin{definition}
+Fix an order for the $n$ producing sectors. The \textbf{consumption matrix} is $C=[c_{ij}]$, where
+\[
+c_{ij}=\text{dollar value of input from sector $i$ needed to produce \$1 of output in sector $j$}.
+\]
+Thus, \textbf{row $i$ identifies the supplier} and \textbf{column $j$ identifies the producer using the input}. The entries are nonnegative. The diagonal entry $c_{jj}$ records sector $j$'s use of its own product.
+\end{definition}
+
+\begin{example}\label{ex:words}
+An economy has farming $(F)$ and manufacturing $(M)$. Each dollar of farming output requires \$0.20 of farming and \$0.10 of manufacturing. Each dollar of manufacturing output requires \$0.30 of farming and \$0.40 of manufacturing. Construct the consumption matrix in the order $F,M$ and interpret $c_{12}$ and $c_{21}$.
+\end{example}
+
+
+
+\work
+
+\newpage
+\begin{example}\label{ex:table}
+The table gives dollar inputs required per dollar of output. Write $C$ in the order energy $(E)$, manufacturing $(M)$, transportation $(T)$. Explain the meaning of the entry $0.20$ in row $M$, column $T$.
+\end{example}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccc}
+ &\multicolumn{3}{c}{Producer using the input}\\
+Supplier & $E$ & $M$ & $T$\\\hline
+$E$ & $0.50$ & $0.20$ & $0.10$\\
+$M$ & $0.10$ & $0.50$ & $0.20$\\
+$T$ & $0.20$ & $0.10$ & $0.50$
+\end{tabular}
+\end{center}
+
+\work
+
+\newpage
+\section{The Leontief Equation}
+\begin{definition}
+The \textbf{production vector} $\vec{x}$ and \textbf{demand vector} $\vec{d}$ are
+\[
+\vec{x}=\begin{bmatrix}x_1\\ \vdots\\x_n\end{bmatrix},\qquad
+\vec{d}=\begin{bmatrix}d_1\\ \vdots\\d_n\end{bmatrix},
+\]
+where $x_i$ is the total dollar value produced by sector $i$ and $d_i$ is the dollar value demanded from sector $i$ by outside customers. All values refer to the same period and use the same monetary units.
+\end{definition}
+
+Sector $j$ produces $x_j$ dollars of output, so it uses $c_{ij}x_j$ dollars from supplier $i$. Summing over all producing sectors, the internal demand for sector $i$'s output is
+\[
+c_{i1}x_1+c_{i2}x_2+\cdots+c_{in}x_n=(C\vec{x})_i.
+\]
+To meet outside demand exactly, with no surplus or shortage,
+\[
+\underbrace{\vec{x}}_{\text{total production}}
+=\underbrace{C\vec{x}}_{\text{internal demand}}
++\underbrace{\vec{d}}_{\text{outside demand}}.
+\]
+\begin{definition}
+The \textbf{Leontief equation} and the \textbf{Leontief matrix} are, respectively,
+\[
+\boxed{(I-C)\vec{x}=\vec{d}}\qquad\text{and}\qquad I-C.
+\]
+If $I-C$ is invertible, the unique solution is $\boxed{\vec{x}=(I-C)^{-1}\vec{d}}$.
+An economically meaningful production vector must have nonnegative entries.
+\end{definition}
+
+\begin{note}
+In $I-C$, the diagonal entries are $1-c_{ii}$ and the off-diagonal entries are $-c_{ij}$. Do not subtract every entry of $C$ from $1$. Also, invert $I-C$, not $C$.
+\end{note}
+
+
+\newpage
+\begin{example}[A two-sector model]\label{ex:two}
+For the farming and manufacturing economy in Example~\ref{ex:words}, outside customers require \$500 of farming and \$500 of manufacturing. Set up and solve the Leontief equation.
+\end{example}
+\work
+
+\newpage
+\section{Solving by Row Reduction}
+To find production from a table, write $C$ and $\vec{d}$ in the stated order, form $I-C$, and row reduce $[\,I-C\mid\vec{d}\,]$. You may first multiply each equation by $10$ or $100$ to clear decimals. \textbf{Multiply the right-hand side by the same factor.}
+
+\begin{example}[A three-sector model]\label{ex:three}
+Use the table in Example~\ref{ex:table}. Outside demand is \$200 of energy, \$700 of manufacturing, and \$1500 of transportation. Use row reduction to find the required production vector.
+\end{example}
+\work
+
+\newpage
+\begin{example}[Checking the interpretation]
+For the production vector found in Example~\ref{ex:three}, calculate $C\vec{x}$ and verify $\vec{x}-C\vec{x}=\vec{d}$. How much energy output is used internally? How much is available to outside customers?
+\end{example}
+\work
+
+\newpage
+\begin{example}[Practice with a table]\label{ex:practice3}
+A company provides design $(D)$, software $(S)$, and technical support $(T)$. The table gives dollar inputs required per dollar of output.
+\end{example}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccc}
+ &\multicolumn{3}{c}{Producer using the input}\\
+Supplier & Design & Software & Support\\\hline
+Design & $0.20$ & $0.10$ & $0.20$\\
+Software & $0.30$ & $0.20$ & $0.10$\\
+Support & $0.10$ & $0.20$ & $0.30$
+\end{tabular}
+\end{center}
+\begin{enumerate}
+\item[(a)] Write the consumption matrix in the order $D,S,T$.
+\item[(b)] Outside customers demand \$500 of design, \$1400 of software, and \$2000 of support. Use row reduction to find the production vector that meets this demand exactly.
+\item[(c)] Verify your answer and interpret each entry of the production vector.
+\end{enumerate}
+
+\work
+
+\newpage
+\textbf{Example 3.3 (continued).}
+Continue the row reduction, verification, and interpretation here.\work
+\newpage
+\section{Solving by Matrix Inversion}
+When asked to use matrix inversion, explicitly find $(I-C)^{-1}$ and multiply it by $\vec{d}$. For a $2\times2$ matrix, recall that
+\[
+\begin{bmatrix}a&b\\c&d\end{bmatrix}^{-1}
+=\frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}
+\qquad(ad-bc\ne0).
+\]
+Equivalently, row reduce $[\,I-C\mid I\,]$ to $[\,I\mid(I-C)^{-1}\,]$.
+
+\begin{example}\label{ex:inverse}
+Use matrix inversion to find the production vector for
+\[
+C=\begin{bmatrix}0.20&0.10\\0.40&0.30\end{bmatrix},\qquad
+\vec{d}=\begin{bmatrix}100\\80\end{bmatrix}.
+\]
+\end{example}
+\work
+
+\newpage
+\begin{example}[Practice with inversion]\label{ex:practice2}
+Use matrix inversion to find $\vec{x}$, then verify $(I-C)\vec{x}=\vec{d}$:
+\[
+C=\begin{bmatrix}0.40&0.20\\0.10&0.50\end{bmatrix},\qquad
+\vec{d}=\begin{bmatrix}80\\80\end{bmatrix}.
+\]
+\end{example}
+\work
+
+\newpage
+\section{Productive Economies and Problem-Solving Summary}
+\begin{definition}
+A consumption matrix $C\ge0$ is \textbf{productive} if $I-C$ is invertible and $(I-C)^{-1}$ has only nonnegative entries. Then every nonnegative outside demand vector $\vec{d}$ has a unique nonnegative production vector $\vec{x}=(I-C)^{-1}\vec{d}$.
+\end{definition}
+
+\begin{theorem}[Nicholson, Corollary 2.8.1]
+Let $C$ be a square matrix with nonnegative entries. If all column sums of $C$ are less than $1$, then $I-C$ is invertible and $(I-C)^{-1}\ge0$. The same conclusion holds if all row sums of $C$ are less than $1$.
+\end{theorem}
+
+Column $j$ lists the inputs required to produce \$1 in sector $j$. A column sum below $1$ means that the sector requires less than \$1 of inputs from the modeled sectors per dollar of output. In this model, such a sector is called \textbf{profitable}.
+
+\begin{note}
+These are sufficient conditions. A column sum of $1$ or more does \emph{not}, by itself, prove that the economy is not productive. An invertible $I-C$ gives a unique algebraic solution; checking nonnegativity determines whether that solution is economically meaningful.
+\end{note}
+
+\begin{example}
+Use column sums to explain why the model in Example~\ref{ex:three} is productive. What does this tell you about a different nonnegative demand vector for the same economy?
+\end{example}
+\work
+
+\newpage
+\section*{Problem-Solving Summary}
+\textbf{Procedure.}
+\begin{enumerate}
+\item Fix a sector order and state the units.
+\item Construct $C$: rows are suppliers, columns are producers using the inputs.
+\item Put only the \emph{outside} demands into $\vec{d}$.
+\item Form $(I-C)\vec{x}=\vec{d}$.
+\item Use the requested method: row reduce $[\,I-C\mid\vec{d}\,]$, or compute $(I-C)^{-1}\vec{d}$.
+\item Check $\vec{x}\ge0$ and $\vec{x}-C\vec{x}=\vec{d}$; state what each sector must produce.
+\end{enumerate}
+
+\textbf{Textbook practice.} Anton and Rorres, \emph{Elementary Linear Algebra: Applications Version}, 11th edition, Exercise Set \textbf{1.10}, Problems \textbf{1--6}, p. 100. The Leontief section in the supplied edition is numbered 1.10.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|l}
+Problems & Preparation in these notes\\\hline
+1--2 & Consumption matrix from a verbal description; two-sector model\\
+3--4 & Consumption matrix from a table; three-sector row reduction\\
+5--6 & Production vector using $(I-C)^{-1}\vec{d}$
+\end{tabular}
+\end{center}
+\vfill
+{\small\textbf{Source.} W. Keith Nicholson, \emph{Linear Algebra with Applications}, open edition, version 2023-A, Vretta-Lyryx Inc., 2023, Section 2.8, pp. 130--131 (open model, Theorem 2.8.2 and Corollary 2.8.1). These notes use $C$ and $\vec{x}$ in place of Nicholson's $E$ and $\vec{p}$ and use the per-dollar production convention for the exercises. The examples in Sections 1--5 are new; Section 6 contains separately credited adaptations of Dawson examination questions.}
+
+\newpage
+\section{Dawson Final Examination Practice}
+The following questions are adapted from the cited Dawson College examinations. The wording has been revised; the numerical data, requested tasks, and original marks are retained. The worked solutions in the solution copy are newly written.
+
+\begin{example}[Fall 2024, Question 9: Food and housing]\label{ex:dawsonfall}
+Two industries supply food $(F)$ and housing $(H)$. Their input requirements are:
+\begin{itemize}
+\item A dollar of food output uses \$0.45 of food and \$0.35 of housing.
+\item A dollar of housing output uses \$0.25 of food and \$0.45 of housing.
+\end{itemize}
+\begin{enumerate}
+\item[(a)] Write the consumption matrix, ordering the industries as $F,H$. \hfill [1 mark]
+\item[(b)] Determine each industry's total output, in dollars, when outside customers request \$9000 of food and \$12000 of housing. \hfill [6 marks]
+\end{enumerate}
+\end{example}
+{\small\textit{Source:} Dawson College, 201-MA3-DW, \href{https://www.dawsoncollege.qc.ca/mathematics/wp-content/uploads/sites/113/Fall-2024-3.pdf}{Fall 2024 final examination}, Question 9, p. 9.}
+
+\work
+\newpage
+\begin{example}[Winter 2024, Question 13: Electricity and services]\label{ex:dawsonwinter}
+An economy produces electricity $(E)$ and services $(S)$. One unit of electricity output needs $0.5$ units of electricity and $0.4$ units of services. One unit of services output needs $0.5$ units of electricity and $0.2$ units of services. Determine the production levels needed for outside demand of $1000$ electricity units and $2000$ services units. Solve by matrix inversion. \hfill [7 marks]
+\end{example}
+{\small\textit{Source:} Dawson College, 201-MA3-DW, \href{https://www.dawsoncollege.qc.ca/mathematics/wp-content/uploads/sites/113/Winter-2024-3.pdf}{Winter 2024 final examination}, June 3, 2024, Question 13, p. 13.}
+
+\begin{note}
+This question measures output in sector-specific units, rather than dollars. Here $c_{ij}$ is the number of units of sector $i$ required per unit of sector $j$'s output. The same production equation $(I-C)\vec{x}=\vec{d}$ applies. Report each answer in the units of its sector.
+\end{note}
+
+\work
+\end{document}
