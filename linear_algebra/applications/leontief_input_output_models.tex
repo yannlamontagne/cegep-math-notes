@@ -156,35 +156,7 @@ Support & $0.10$ & $0.20$ & $0.30$
 \textbf{Example 3.3 (continued).}
 Continue the row reduction, verification, and interpretation here.\work
 \newpage
-\section{Solving by Matrix Inversion}
-When asked to use matrix inversion, explicitly find $(I-C)^{-1}$ and multiply it by $\vec{d}$. For a $2\times2$ matrix, recall that
-\[
-\begin{bmatrix}a&b\\c&d\end{bmatrix}^{-1}
-=\frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}
-\qquad(ad-bc\ne0).
-\]
-Equivalently, row reduce $[\,I-C\mid I\,]$ to $[\,I\mid(I-C)^{-1}\,]$.
 
-\begin{example}\label{ex:inverse}
-Use matrix inversion to find the production vector for
-\[
-C=\begin{bmatrix}0.20&0.10\\0.40&0.30\end{bmatrix},\qquad
-\vec{d}=\begin{bmatrix}100\\80\end{bmatrix}.
-\]
-\end{example}
-\work
-
-\newpage
-\begin{example}[Practice with inversion]\label{ex:practice2}
-Use matrix inversion to find $\vec{x}$, then verify $(I-C)\vec{x}=\vec{d}$:
-\[
-C=\begin{bmatrix}0.40&0.20\\0.10&0.50\end{bmatrix},\qquad
-\vec{d}=\begin{bmatrix}80\\80\end{bmatrix}.
-\]
-\end{example}
-\work
-
-\newpage
 \section{Productive Economies and Problem-Solving Summary}
 \begin{definition}
 A consumption matrix $C\ge0$ is \textbf{productive} if $I-C$ is invertible and $(I-C)^{-1}$ has only nonnegative entries. Then every nonnegative outside demand vector $\vec{d}$ has a unique nonnegative production vector $\vec{x}=(I-C)^{-1}\vec{d}$.
